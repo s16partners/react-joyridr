@@ -6,13 +6,13 @@ export default class Scope {
 
   constructor(element: HTMLElement, options: ?Object = {}) {
     if (!(element instanceof HTMLElement)) {
-      throw new TypeError('Invalid parameter: element must be an HTMLElement');
+      throw new TypeError("Invalid parameter: element must be an HTMLElement");
     }
 
     this.element = element;
     this.options = options;
 
-    window.addEventListener('keydown', this.handleKeyDown, false);
+    window.addEventListener("keydown", this.handleKeyDown, false);
 
     this.setFocus();
   }
@@ -30,14 +30,18 @@ export default class Scope {
     const validTabNodes = /input|select|textarea|button|object/;
     const nodeName = element.nodeName.toLowerCase();
     const res =
-      (validTabNodes.test(nodeName) && !element.getAttribute('disabled')) ||
-      (nodeName === 'a' ? element.getAttribute('href') || isTabIndexNotNaN : isTabIndexNotNaN);
+      (validTabNodes.test(nodeName) && !element.getAttribute("disabled")) ||
+      (nodeName === "a"
+        ? element.getAttribute("href") || isTabIndexNotNaN
+        : isTabIndexNotNaN);
 
     return res && this.isVisible(element);
   };
 
   findValidTabElements = () =>
-    [].slice.call(this.element.querySelectorAll('*'), 0).filter(this.canBeTabbed);
+    [].slice
+      .call(this.element.querySelectorAll("*"), 0)
+      .filter(this.canBeTabbed);
 
   handleKeyDown = (e: KeyboardEvent) => {
     const { keyCode = 9 } = this.options;
@@ -77,8 +81,8 @@ export default class Scope {
     if (noSize && !element.innerHTML) return true;
 
     return (
-      (noSize && style.getPropertyValue('overflow') !== 'visible') ||
-      style.getPropertyValue('display') === 'none'
+      (noSize && style.getPropertyValue("overflow") !== "visible") ||
+      style.getPropertyValue("display") === "none"
     );
   };
 
@@ -99,7 +103,7 @@ export default class Scope {
   };
 
   removeScope = () => {
-    window.removeEventListener('keydown', this.handleKeyDown);
+    window.removeEventListener("keydown", this.handleKeyDown);
   };
 
   setFocus = () => {

@@ -1,8 +1,8 @@
 // @flow
-import { isValidElement } from 'react';
-import { createPortal } from 'react-dom';
-import ExecutionEnvironment from 'exenv';
-import is from 'is-lite';
+import { isValidElement } from "react";
+import { createPortal } from "react-dom";
+import ExecutionEnvironment from "exenv";
+import is from "is-lite";
 
 export const { canUseDOM } = ExecutionEnvironment;
 export const isReact16 = createPortal !== undefined;
@@ -17,28 +17,30 @@ export const isReact16 = createPortal !== undefined;
 export function getBrowser(userAgent: string = navigator.userAgent): string {
   let browser = userAgent;
 
-  if (typeof window === 'undefined') {
-    browser = 'node';
+  if (typeof window === "undefined") {
+    browser = "node";
   } else if (document.documentMode) {
-    browser = 'ie';
+    browser = "ie";
   } else if (/Edge/.test(userAgent)) {
-    browser = 'edge';
+    browser = "edge";
   }
   // Opera 8.0+
-  else if (Boolean(window.opera) || userAgent.indexOf(' OPR/') >= 0) {
-    browser = 'opera';
+  else if (Boolean(window.opera) || userAgent.indexOf(" OPR/") >= 0) {
+    browser = "opera";
   }
   // Firefox 1.0+
-  else if (typeof window.InstallTrigger !== 'undefined') {
-    browser = 'firefox';
+  else if (typeof window.InstallTrigger !== "undefined") {
+    browser = "firefox";
   }
   // Chrome 1+
   else if (window.chrome) {
-    browser = 'chrome';
+    browser = "chrome";
   }
   // Safari (and Chrome iOS, Firefox iOS)
-  else if (/(Version\/([0-9._]+).*Safari|CriOS|FxiOS| Mobile\/)/.test(userAgent)) {
-    browser = 'safari';
+  else if (
+    /(Version\/([0-9._]+).*Safari|CriOS|FxiOS| Mobile\/)/.test(userAgent)
+  ) {
+    browser = "safari";
   }
 
   return browser;
@@ -68,7 +70,7 @@ export function getText(root: any): string {
 
   const recurse = child => {
     /* istanbul ignore else */
-    if (typeof child === 'string' || typeof child === 'number') {
+    if (typeof child === "string" || typeof child === "number") {
       content.push(child);
     } else if (Array.isArray(child)) {
       child.forEach(c => recurse(c));
@@ -85,7 +87,7 @@ export function getText(root: any): string {
 
   recurse(root);
 
-  return content.join(' ').trim();
+  return content.join(" ").trim();
 }
 
 export function hasOwnProperty(value: Object, key: string): boolean {
@@ -108,10 +110,19 @@ export function hasValidKeys(value: Object, keys: Array<any>): boolean {
  */
 export function hexToRGB(hex: string): Array<number> {
   const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-  const properHex = hex.replace(shorthandRegex, (m, r, g, b) => r + r + g + g + b + b);
+  const properHex = hex.replace(
+    shorthandRegex,
+    (m, r, g, b) => r + r + g + g + b + b
+  );
 
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(properHex);
-  return result ? [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)] : [];
+  return result
+    ? [
+        parseInt(result[1], 16),
+        parseInt(result[2], 16),
+        parseInt(result[3], 16)
+      ]
+    : [];
 }
 
 /**
@@ -121,7 +132,7 @@ export function hexToRGB(hex: string): Array<number> {
  * @returns {boolean}
  */
 export function hideBeacon(step: Object): boolean {
-  return step.disableBeacon || step.placement === 'center';
+  return step.disableBeacon || step.placement === "center";
 }
 
 /**
@@ -137,7 +148,11 @@ export function isEqual(left: any, right: any): boolean {
   const hasReactElement = isValidElement(left) || isValidElement(right);
   const hasUndefined = is.undefined(left) || is.undefined(right);
 
-  if (getObjectType(left) !== getObjectType(right) || hasReactElement || hasUndefined) {
+  if (
+    getObjectType(left) !== getObjectType(right) ||
+    hasReactElement ||
+    hasUndefined
+  ) {
     return false;
   }
 
@@ -156,17 +171,23 @@ export function isEqual(left: any, right: any): boolean {
   for (const key in left) {
     /* istanbul ignore else */
     if (hasOwnProperty(left, key)) {
-      if (typeof left[key] === 'undefined' || typeof right[key] === 'undefined') {
+      if (
+        typeof left[key] === "undefined" ||
+        typeof right[key] === "undefined"
+      ) {
         return false;
       }
 
       type = getObjectType(left[key]);
 
-      if (['object', 'array'].includes(type) && isEqual(left[key], right[key])) {
+      if (
+        ["object", "array"].includes(type) &&
+        isEqual(left[key], right[key])
+      ) {
         continue;
       }
 
-      if (type === 'function' && isEqual(left[key], right[key])) {
+      if (type === "function" && isEqual(left[key], right[key])) {
         continue;
       }
 
@@ -179,7 +200,7 @@ export function isEqual(left: any, right: any): boolean {
   for (const p in right) {
     /* istanbul ignore else */
     if (hasOwnProperty(right, p)) {
-      if (typeof left[p] === 'undefined') {
+      if (typeof left[p] === "undefined") {
         return false;
       }
     }
@@ -194,7 +215,7 @@ export function isEqual(left: any, right: any): boolean {
  * @returns {boolean}
  */
 export function isLegacy(): boolean {
-  return !['chrome', 'safari', 'firefox', 'opera'].includes(getBrowser());
+  return !["chrome", "safari", "firefox", "opera"].includes(getBrowser());
 }
 
 /**
@@ -215,7 +236,7 @@ export function log({ title, data, warn = false, debug = false }: Object) {
     if (title && data) {
       console.groupCollapsed(
         `%creact-joyride: ${title}`,
-        'color: #ff0044; font-weight: bold; font-size: 12px;',
+        "color: #ff0044; font-weight: bold; font-size: 12px;"
       );
 
       if (Array.isArray(data)) {
@@ -232,7 +253,7 @@ export function log({ title, data, warn = false, debug = false }: Object) {
 
       console.groupEnd();
     } else {
-      console.error('Missing title or data props');
+      console.error("Missing title or data props");
     }
   }
   /* eslint-enable */

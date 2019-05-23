@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
-import Standard from '../__fixtures__/Standard';
+import Standard from "../__fixtures__/Standard";
 
-import { ACTIONS, EVENTS, LIFECYCLE, STATUS } from '../../src';
+import { ACTIONS, EVENTS, LIFECYCLE, STATUS } from "../../src";
 
-jest.mock('popper.js', () => {
-  const PopperJS = jest.requireActual('popper.js');
+jest.mock("popper.js", () => {
+  const PopperJS = jest.requireActual("popper.js");
 
   return class {
     static placements = PopperJS.placements;
@@ -13,7 +13,7 @@ jest.mock('popper.js', () => {
     constructor() {
       return {
         destroy: () => {},
-        scheduleUpdate: () => {},
+        scheduleUpdate: () => {}
       };
     }
   };
@@ -23,36 +23,38 @@ console.warn = jest.fn();
 
 const mockCallback = jest.fn();
 const props = {
-  callback: mockCallback,
+  callback: mockCallback
 };
 
 function initPopper(wrapper) {
-  const Step = wrapper.find('JoyrideStep').instance();
-  Step.setPopper({ popper: {} }, 'wrapper');
-  Step.setPopper({ popper: {} }, 'tooltip');
+  const Step = wrapper.find("JoyrideStep").instance();
+  Step.setPopper({ popper: {} }, "wrapper");
+  Step.setPopper({ popper: {} }, "tooltip");
 }
 
-describe('Joyride > Standard', () => {
+describe("Joyride > Standard", () => {
   let wrapper;
   let joyride;
 
   beforeAll(() => {
-    wrapper = mount(<Standard {...props} />, { attachTo: document.getElementById('react') });
-    joyride = wrapper.find('Joyride').instance();
+    wrapper = mount(<Standard {...props} />, {
+      attachTo: document.getElementById("react")
+    });
+    joyride = wrapper.find("Joyride").instance();
   });
 
-  it('should have initiated the Joyride', () => {
+  it("should have initiated the Joyride", () => {
     expect(joyride.state).toMatchSnapshot();
   });
 
-  it('should not have rendered a step', () => {
-    window.dispatchEvent(new Event('resize'));
-    expect(wrapper.find('Joyride')).toExist();
-    expect(wrapper.find('JoyrideStep')).not.toExist();
+  it("should not have rendered a step", () => {
+    window.dispatchEvent(new Event("resize"));
+    expect(wrapper.find("Joyride")).toExist();
+    expect(wrapper.find("JoyrideStep")).not.toExist();
   });
 
-  it('should be able to start the tour', () => {
-    wrapper.find('.hero__start').simulate('click');
+  it("should be able to start the tour", () => {
+    wrapper.find(".hero__start").simulate("click");
 
     expect(joyride.state).toMatchSnapshot();
     expect(mockCallback).toHaveBeenCalledWith({
@@ -63,11 +65,11 @@ describe('Joyride > Standard', () => {
       size: 4,
       status: STATUS.RUNNING,
       step: expect.any(Object),
-      type: EVENTS.TOUR_START,
+      type: EVENTS.TOUR_START
     });
   });
 
-  it('should have rendered the STEP 1 Beacon', () => {
+  it("should have rendered the STEP 1 Beacon", () => {
     initPopper(wrapper);
 
     expect(mockCallback).toHaveBeenCalledWith({
@@ -78,7 +80,7 @@ describe('Joyride > Standard', () => {
       size: 4,
       status: STATUS.RUNNING,
       step: expect.any(Object),
-      type: EVENTS.STEP_BEFORE,
+      type: EVENTS.STEP_BEFORE
     });
 
     expect(mockCallback).toHaveBeenCalledWith({
@@ -89,12 +91,12 @@ describe('Joyride > Standard', () => {
       size: 4,
       status: STATUS.RUNNING,
       step: expect.any(Object),
-      type: EVENTS.BEACON,
+      type: EVENTS.BEACON
     });
   });
 
-  it('should be able to click STEP 1 Beacon', () => {
-    wrapper.find('JoyrideBeacon').simulate('click');
+  it("should be able to click STEP 1 Beacon", () => {
+    wrapper.find("JoyrideBeacon").simulate("click");
 
     expect(mockCallback).toHaveBeenCalledWith({
       action: ACTIONS.UPDATE,
@@ -104,16 +106,18 @@ describe('Joyride > Standard', () => {
       size: 4,
       status: STATUS.RUNNING,
       step: expect.any(Object),
-      type: EVENTS.TOOLTIP,
+      type: EVENTS.TOOLTIP
     });
     expect(joyride.state).toMatchSnapshot();
   });
 
-  it('should be able to click STEP 1 Primary button', () => {
-    wrapper.find('JoyrideTooltip [data-test-id="button-primary"]').simulate('click');
+  it("should be able to click STEP 1 Primary button", () => {
+    wrapper
+      .find('JoyrideTooltip [data-test-id="button-primary"]')
+      .simulate("click");
 
-    window.dispatchEvent(new Event('keydown', { keyCode: 9 }));
-    window.dispatchEvent(new KeyboardEvent('keydown', { keyCode: 9 }));
+    window.dispatchEvent(new Event("keydown", { keyCode: 9 }));
+    window.dispatchEvent(new KeyboardEvent("keydown", { keyCode: 9 }));
 
     expect(mockCallback).toHaveBeenCalledWith({
       action: ACTIONS.NEXT,
@@ -123,12 +127,12 @@ describe('Joyride > Standard', () => {
       size: 4,
       status: STATUS.RUNNING,
       step: expect.any(Object),
-      type: EVENTS.STEP_AFTER,
+      type: EVENTS.STEP_AFTER
     });
     expect(joyride.state).toMatchSnapshot();
   });
 
-  it('should have rendered the STEP 2 Tooltip', () => {
+  it("should have rendered the STEP 2 Tooltip", () => {
     initPopper(wrapper);
 
     expect(mockCallback).toHaveBeenCalledWith({
@@ -139,7 +143,7 @@ describe('Joyride > Standard', () => {
       size: 4,
       status: STATUS.RUNNING,
       step: expect.any(Object),
-      type: EVENTS.STEP_BEFORE,
+      type: EVENTS.STEP_BEFORE
     });
 
     expect(mockCallback).toHaveBeenCalledWith({
@@ -150,12 +154,14 @@ describe('Joyride > Standard', () => {
       size: 4,
       status: STATUS.RUNNING,
       step: expect.any(Object),
-      type: EVENTS.TOOLTIP,
+      type: EVENTS.TOOLTIP
     });
   });
 
-  it('should be able to click STEP 2 Primary button', () => {
-    wrapper.find('JoyrideTooltip [data-test-id="button-primary"]').simulate('click');
+  it("should be able to click STEP 2 Primary button", () => {
+    wrapper
+      .find('JoyrideTooltip [data-test-id="button-primary"]')
+      .simulate("click");
 
     expect(mockCallback).toHaveBeenCalledWith({
       action: ACTIONS.NEXT,
@@ -165,12 +171,12 @@ describe('Joyride > Standard', () => {
       size: 4,
       status: STATUS.RUNNING,
       step: expect.any(Object),
-      type: EVENTS.STEP_AFTER,
+      type: EVENTS.STEP_AFTER
     });
     expect(joyride.state).toMatchSnapshot();
   });
 
-  it('should have rendered the STEP 3 Tooltip', () => {
+  it("should have rendered the STEP 3 Tooltip", () => {
     initPopper(wrapper);
 
     expect(mockCallback).toHaveBeenCalledWith({
@@ -181,7 +187,7 @@ describe('Joyride > Standard', () => {
       size: 4,
       status: STATUS.RUNNING,
       step: expect.any(Object),
-      type: EVENTS.STEP_BEFORE,
+      type: EVENTS.STEP_BEFORE
     });
 
     expect(mockCallback).toHaveBeenCalledWith({
@@ -192,13 +198,15 @@ describe('Joyride > Standard', () => {
       size: 4,
       status: STATUS.RUNNING,
       step: expect.any(Object),
-      type: EVENTS.TOOLTIP,
+      type: EVENTS.TOOLTIP
     });
     expect(joyride.state).toMatchSnapshot();
   });
 
-  it('should be able to click STEP 3 Back button', () => {
-    wrapper.find('JoyrideTooltip [data-test-id="button-back"]').simulate('click');
+  it("should be able to click STEP 3 Back button", () => {
+    wrapper
+      .find('JoyrideTooltip [data-test-id="button-back"]')
+      .simulate("click");
 
     expect(mockCallback).toHaveBeenCalledWith({
       action: ACTIONS.PREV,
@@ -208,12 +216,12 @@ describe('Joyride > Standard', () => {
       size: 4,
       status: STATUS.RUNNING,
       step: expect.any(Object),
-      type: EVENTS.STEP_AFTER,
+      type: EVENTS.STEP_AFTER
     });
     expect(joyride.state).toMatchSnapshot();
   });
 
-  it('should have rendered the STEP 2 Tooltip and advance AGAIN', () => {
+  it("should have rendered the STEP 2 Tooltip and advance AGAIN", () => {
     initPopper(wrapper);
 
     expect(mockCallback).toHaveBeenCalledWith({
@@ -224,7 +232,7 @@ describe('Joyride > Standard', () => {
       size: 4,
       status: STATUS.RUNNING,
       step: expect.any(Object),
-      type: EVENTS.STEP_BEFORE,
+      type: EVENTS.STEP_BEFORE
     });
 
     expect(mockCallback).toHaveBeenCalledWith({
@@ -235,12 +243,14 @@ describe('Joyride > Standard', () => {
       size: 4,
       status: STATUS.RUNNING,
       step: expect.any(Object),
-      type: EVENTS.TOOLTIP,
+      type: EVENTS.TOOLTIP
     });
   });
 
-  it('should be able to click STEP 2 Primary button AGAIN', () => {
-    wrapper.find('JoyrideTooltip [data-test-id="button-primary"]').simulate('click');
+  it("should be able to click STEP 2 Primary button AGAIN", () => {
+    wrapper
+      .find('JoyrideTooltip [data-test-id="button-primary"]')
+      .simulate("click");
 
     expect(mockCallback).toHaveBeenCalledWith({
       action: ACTIONS.NEXT,
@@ -250,12 +260,12 @@ describe('Joyride > Standard', () => {
       size: 4,
       status: STATUS.RUNNING,
       step: expect.any(Object),
-      type: EVENTS.STEP_AFTER,
+      type: EVENTS.STEP_AFTER
     });
     expect(joyride.state).toMatchSnapshot();
   });
 
-  it('should have rendered the STEP 3 Tooltip AGAIN', () => {
+  it("should have rendered the STEP 3 Tooltip AGAIN", () => {
     initPopper(wrapper);
 
     expect(mockCallback).toHaveBeenCalledWith({
@@ -266,7 +276,7 @@ describe('Joyride > Standard', () => {
       size: 4,
       status: STATUS.RUNNING,
       step: expect.any(Object),
-      type: EVENTS.STEP_BEFORE,
+      type: EVENTS.STEP_BEFORE
     });
 
     expect(mockCallback).toHaveBeenCalledWith({
@@ -277,13 +287,15 @@ describe('Joyride > Standard', () => {
       size: 4,
       status: STATUS.RUNNING,
       step: expect.any(Object),
-      type: EVENTS.TOOLTIP,
+      type: EVENTS.TOOLTIP
     });
     expect(joyride.state).toMatchSnapshot();
   });
 
-  it('should be able to click STEP 3 Primary button', () => {
-    wrapper.find('JoyrideTooltip [data-test-id="button-primary"]').simulate('click');
+  it("should be able to click STEP 3 Primary button", () => {
+    wrapper
+      .find('JoyrideTooltip [data-test-id="button-primary"]')
+      .simulate("click");
 
     expect(mockCallback).toHaveBeenCalledWith({
       action: ACTIONS.NEXT,
@@ -293,12 +305,12 @@ describe('Joyride > Standard', () => {
       size: 4,
       status: STATUS.RUNNING,
       step: expect.any(Object),
-      type: EVENTS.STEP_AFTER,
+      type: EVENTS.STEP_AFTER
     });
     expect(joyride.state).toMatchSnapshot();
   });
 
-  it('should have rendered the STEP 4 Tooltip', () => {
+  it("should have rendered the STEP 4 Tooltip", () => {
     initPopper(wrapper);
 
     expect(mockCallback).toHaveBeenCalledWith({
@@ -309,7 +321,7 @@ describe('Joyride > Standard', () => {
       size: 4,
       status: STATUS.RUNNING,
       step: expect.any(Object),
-      type: EVENTS.STEP_BEFORE,
+      type: EVENTS.STEP_BEFORE
     });
 
     expect(mockCallback).toHaveBeenCalledWith({
@@ -320,13 +332,15 @@ describe('Joyride > Standard', () => {
       size: 4,
       status: STATUS.RUNNING,
       step: expect.any(Object),
-      type: EVENTS.TOOLTIP,
+      type: EVENTS.TOOLTIP
     });
     expect(joyride.state).toMatchSnapshot();
   });
 
-  it('should be able to click STEP 4 Primary button', () => {
-    wrapper.find('JoyrideTooltip [data-test-id="button-primary"]').simulate('click');
+  it("should be able to click STEP 4 Primary button", () => {
+    wrapper
+      .find('JoyrideTooltip [data-test-id="button-primary"]')
+      .simulate("click");
 
     expect(mockCallback).toHaveBeenCalledWith({
       action: ACTIONS.NEXT,
@@ -336,12 +350,12 @@ describe('Joyride > Standard', () => {
       size: 4,
       status: STATUS.FINISHED,
       step: expect.any(Object),
-      type: EVENTS.STEP_AFTER,
+      type: EVENTS.STEP_AFTER
     });
     expect(joyride.state).toMatchSnapshot();
   });
 
-  it('should have ended the tour', () => {
+  it("should have ended the tour", () => {
     expect(mockCallback).toHaveBeenCalledWith({
       action: ACTIONS.NEXT,
       controlled: false,
@@ -350,7 +364,7 @@ describe('Joyride > Standard', () => {
       size: 4,
       status: STATUS.FINISHED,
       step: expect.any(Object),
-      type: EVENTS.TOUR_END,
+      type: EVENTS.TOUR_END
     });
 
     expect(mockCallback).toHaveBeenCalledWith({
@@ -361,7 +375,7 @@ describe('Joyride > Standard', () => {
       size: 4,
       status: STATUS.READY,
       step: expect.any(Object),
-      type: EVENTS.TOUR_STATUS,
+      type: EVENTS.TOUR_STATUS
     });
 
     expect(mockCallback).toHaveBeenCalledWith({
@@ -372,13 +386,13 @@ describe('Joyride > Standard', () => {
       size: 4,
       status: STATUS.PAUSED,
       step: expect.any(Object),
-      type: EVENTS.TOUR_STATUS,
+      type: EVENTS.TOUR_STATUS
     });
   });
 
-  it('should unmount', () => {
+  it("should unmount", () => {
     wrapper.unmount();
 
-    expect(wrapper.find('Joyride')).not.toExist();
+    expect(wrapper.find("Joyride")).not.toExist();
   });
 });

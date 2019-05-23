@@ -1,15 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import is from 'is-lite';
-import { componentTypeWithRefs } from '../modules/propTypes';
+import React from "react";
+import PropTypes from "prop-types";
+import is from "is-lite";
+import { componentTypeWithRefs } from "../modules/propTypes";
 
 export default class JoyrideBeacon extends React.Component {
   constructor(props) {
     super(props);
 
     if (!props.beaconComponent) {
-      const head = document.head || document.getElementsByTagName('head')[0];
-      const style = document.createElement('style');
+      const head = document.head || document.getElementsByTagName("head")[0];
+      const style = document.createElement("style");
       const css = `
         @keyframes joyride-beacon-inner {
           20% {
@@ -38,8 +38,8 @@ export default class JoyrideBeacon extends React.Component {
         }
       `;
 
-      style.type = 'text/css';
-      style.id = 'joyride-beacon-animation';
+      style.type = "text/css";
+      style.id = "joyride-beacon-animation";
       style.appendChild(document.createTextNode(css));
 
       head.appendChild(style);
@@ -50,13 +50,13 @@ export default class JoyrideBeacon extends React.Component {
     beaconComponent: componentTypeWithRefs,
     locale: PropTypes.object.isRequired,
     onClickOrHover: PropTypes.func.isRequired,
-    styles: PropTypes.object.isRequired,
+    styles: PropTypes.object.isRequired
   };
 
   componentDidMount() {
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV !== "production") {
       if (!is.domElement(this.beacon)) {
-        console.warn('beacon is not a valid DOM element'); //eslint-disable-line no-console
+        console.warn("beacon is not a valid DOM element"); //eslint-disable-line no-console
       }
     }
 
@@ -68,7 +68,7 @@ export default class JoyrideBeacon extends React.Component {
   }
 
   componentWillUnmount() {
-    const style = document.getElementById('joyride-beacon-animation');
+    const style = document.getElementById("joyride-beacon-animation");
 
     if (style) {
       style.parentNode.removeChild(style);
@@ -82,11 +82,11 @@ export default class JoyrideBeacon extends React.Component {
   render() {
     const { beaconComponent, locale, onClickOrHover, styles } = this.props;
     const props = {
-      'aria-label': locale.open,
+      "aria-label": locale.open,
       onClick: onClickOrHover,
       onMouseEnter: onClickOrHover,
       ref: this.setBeaconRef,
-      title: locale.open,
+      title: locale.open
     };
     let component;
 

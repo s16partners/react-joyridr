@@ -1,5 +1,5 @@
 // @flow
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 export interface StoreHelpers {
   close: Function;
@@ -25,22 +25,22 @@ export interface StoreState {
 }
 
 type placement =
-  | 'top'
-  | 'top-start'
-  | 'top-end'
-  | 'bottom'
-  | 'bottom-start'
-  | 'bottom-end'
-  | 'left'
-  | 'left-start'
-  | 'left-end'
-  | 'right'
-  | 'right-start'
-  | 'right-end'
-  | 'auto'
-  | 'center';
+  | "top"
+  | "top-start"
+  | "top-end"
+  | "bottom"
+  | "bottom-start"
+  | "bottom-end"
+  | "left"
+  | "left-start"
+  | "left-end"
+  | "right"
+  | "right-start"
+  | "right-end"
+  | "auto"
+  | "center";
 
-type placementBeacon = 'top' | 'bottom' | 'left' | 'right';
+type placementBeacon = "top" | "bottom" | "left" | "right";
 
 export interface StepProps {
   beaconComponent?: ReactNode;

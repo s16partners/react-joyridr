@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 export default class Tooltip extends React.Component {
   constructor(props) {
@@ -12,19 +12,19 @@ export default class Tooltip extends React.Component {
     Scope: PropTypes.func.isRequired,
     setScope: PropTypes.func.isRequired,
     tabbable: PropTypes.bool,
-    useSelector: PropTypes.bool,
+    useSelector: PropTypes.bool
   };
 
   static defaultProps = {
     tabbable: true,
-    useSelector: false,
+    useSelector: false
   };
 
   componentDidMount() {
     const { setScope, Scope, useSelector } = this.props;
 
     this.scope = new Scope(this.tooltip.current, {
-      selector: useSelector ? '.primary' : undefined,
+      selector: useSelector ? ".primary" : undefined
     });
     setScope(this.scope);
   }

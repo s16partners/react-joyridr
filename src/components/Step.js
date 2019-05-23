@@ -1,21 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Floater from 'react-floater';
-import treeChanges from 'tree-changes';
-import is from 'is-lite';
+import React from "react";
+import PropTypes from "prop-types";
+import Floater from "react-floater";
+import treeChanges from "tree-changes";
+import is from "is-lite";
 
-import { ACTIONS, EVENTS, LIFECYCLE, STATUS } from '../constants';
+import { ACTIONS, EVENTS, LIFECYCLE, STATUS } from "../constants";
 
-import { getElement, isElementVisible, isFixed } from '../modules/dom';
-import { log, hideBeacon } from '../modules/helpers';
-import { componentTypeWithRefs } from '../modules/propTypes';
-import Scope from '../modules/scope';
-import { validateStep } from '../modules/step';
+import { getElement, isElementVisible, isFixed } from "../modules/dom";
+import { log, hideBeacon } from "../modules/helpers";
+import { componentTypeWithRefs } from "../modules/propTypes";
+import Scope from "../modules/scope";
+import { validateStep } from "../modules/step";
 
-import Beacon from './Beacon';
-import Overlay from './Overlay';
-import Tooltip from './Tooltip/index';
-import Portal from './Portal';
+import Beacon from "./Beacon";
+import Overlay from "./Overlay";
+import Tooltip from "./Tooltip/index";
+import Portal from "./Portal";
 
 export default class JoyrideStep extends React.Component {
   scope = { removeScope: () => {} };
@@ -44,7 +44,7 @@ export default class JoyrideStep extends React.Component {
       floaterProps: PropTypes.shape({
         options: PropTypes.object,
         styles: PropTypes.object,
-        wrapperOptions: PropTypes.object,
+        wrapperOptions: PropTypes.object
       }),
       hideBackButton: PropTypes.bool,
       hideCloseButton: PropTypes.bool,
@@ -53,29 +53,30 @@ export default class JoyrideStep extends React.Component {
       locale: PropTypes.object,
       offset: PropTypes.number.isRequired,
       placement: PropTypes.oneOf([
-        'top',
-        'top-start',
-        'top-end',
-        'bottom',
-        'bottom-start',
-        'bottom-end',
-        'left',
-        'left-start',
-        'left-end',
-        'right',
-        'right-start',
-        'right-end',
-        'auto',
-        'center',
+        "top",
+        "top-start",
+        "top-end",
+        "bottom",
+        "bottom-start",
+        "bottom-end",
+        "left",
+        "left-start",
+        "left-end",
+        "right",
+        "right-start",
+        "right-end",
+        "auto",
+        "center"
       ]),
       spotlightClicks: PropTypes.bool,
       spotlightPadding: PropTypes.number,
       styles: PropTypes.object,
-      target: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
+      target: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
+        .isRequired,
       title: PropTypes.node,
-      tooltipComponent: componentTypeWithRefs,
+      tooltipComponent: componentTypeWithRefs
     }).isRequired,
-    update: PropTypes.func.isRequired,
+    update: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -83,8 +84,8 @@ export default class JoyrideStep extends React.Component {
 
     log({
       title: `step:${index}`,
-      data: [{ key: 'props', value: this.props }],
-      debug,
+      data: [{ key: "props", value: this.props }],
+      debug
     });
   }
 
@@ -100,25 +101,33 @@ export default class JoyrideStep extends React.Component {
       size,
       status,
       step,
-      update,
+      update
     } = this.props;
-    const { changed, changedTo, changedFrom } = treeChanges(prevProps, this.props);
+    const { changed, changedTo, changedFrom } = treeChanges(
+      prevProps,
+      this.props
+    );
     const state = { action, controlled, index, lifecycle, size, status };
 
     const skipBeacon =
-      continuous && action !== ACTIONS.CLOSE && (index > 0 || action === ACTIONS.PREV);
+      continuous &&
+      action !== ACTIONS.CLOSE &&
+      (index > 0 || action === ACTIONS.PREV);
     const hasStoreChanged =
-      changed('action') || changed('index') || changed('lifecycle') || changed('status');
+      changed("action") ||
+      changed("index") ||
+      changed("lifecycle") ||
+      changed("status");
     const hasStarted = changedFrom(
-      'lifecycle',
+      "lifecycle",
       [LIFECYCLE.TOOLTIP, LIFECYCLE.INIT],
-      LIFECYCLE.INIT,
+      LIFECYCLE.INIT
     );
-    const isAfterAction = changedTo('action', [
+    const isAfterAction = changedTo("action", [
       ACTIONS.NEXT,
       ACTIONS.PREV,
       ACTIONS.SKIP,
-      ACTIONS.CLOSE,
+      ACTIONS.CLOSE
     ]);
 
     if (isAfterAction && (hasStarted || controlled)) {
@@ -127,7 +136,7 @@ export default class JoyrideStep extends React.Component {
         index: prevProps.index,
         lifecycle: LIFECYCLE.COMPLETE,
         step: prevProps.step,
-        type: EVENTS.STEP_AFTER,
+        type: EVENTS.STEP_AFTER
       });
     }
 
@@ -138,21 +147,21 @@ export default class JoyrideStep extends React.Component {
 
       if (hasRenderedTarget) {
         if (
-          changedFrom('status', STATUS.READY, STATUS.RUNNING) ||
-          changedFrom('lifecycle', LIFECYCLE.INIT, LIFECYCLE.READY)
+          changedFrom("status", STATUS.READY, STATUS.RUNNING) ||
+          changedFrom("lifecycle", LIFECYCLE.INIT, LIFECYCLE.READY)
         ) {
           callback({
             ...state,
             step,
-            type: EVENTS.STEP_BEFORE,
+            type: EVENTS.STEP_BEFORE
           });
         }
       } else {
-        console.warn('Target not mounted', step); //eslint-disable-line no-console
+        console.warn("Target not mounted", step); //eslint-disable-line no-console
         callback({
           ...state,
           type: EVENTS.TARGET_NOT_FOUND,
-          step,
+          step
         });
 
         if (!controlled) {
@@ -161,39 +170,50 @@ export default class JoyrideStep extends React.Component {
       }
     }
 
-    if (changedFrom('lifecycle', LIFECYCLE.INIT, LIFECYCLE.READY)) {
-      update({ lifecycle: hideBeacon(step) || skipBeacon ? LIFECYCLE.TOOLTIP : LIFECYCLE.BEACON });
+    if (changedFrom("lifecycle", LIFECYCLE.INIT, LIFECYCLE.READY)) {
+      update({
+        lifecycle:
+          hideBeacon(step) || skipBeacon ? LIFECYCLE.TOOLTIP : LIFECYCLE.BEACON
+      });
     }
 
-    if (changed('index')) {
+    if (changed("index")) {
       log({
         title: `step:${lifecycle}`,
-        data: [{ key: 'props', value: this.props }],
-        debug,
+        data: [{ key: "props", value: this.props }],
+        debug
       });
     }
 
     /* istanbul ignore else */
-    if (changedTo('lifecycle', LIFECYCLE.BEACON)) {
+    if (changedTo("lifecycle", LIFECYCLE.BEACON)) {
       callback({
         ...state,
         step,
-        type: EVENTS.BEACON,
+        type: EVENTS.BEACON
       });
     }
 
-    if (changedTo('lifecycle', LIFECYCLE.TOOLTIP)) {
+    if (changedTo("lifecycle", LIFECYCLE.TOOLTIP)) {
       callback({
         ...state,
         step,
-        type: EVENTS.TOOLTIP,
+        type: EVENTS.TOOLTIP
       });
 
-      this.scope = new Scope(this.tooltip, { selector: '[data-action=primary]' });
+      this.scope = new Scope(this.tooltip, {
+        selector: "[data-action=primary]"
+      });
       this.scope.setFocus();
     }
 
-    if (changedFrom('lifecycle', [LIFECYCLE.TOOLTIP, LIFECYCLE.INIT], LIFECYCLE.INIT)) {
+    if (
+      changedFrom(
+        "lifecycle",
+        [LIFECYCLE.TOOLTIP, LIFECYCLE.INIT],
+        LIFECYCLE.INIT
+      )
+    ) {
       this.scope.removeScope();
       delete this.beaconPopper;
       delete this.tooltipPopper;
@@ -212,7 +232,7 @@ export default class JoyrideStep extends React.Component {
   handleClickHoverBeacon = e => {
     const { step, update, index } = this.props;
 
-    if (e.type === 'mouseenter' && step.event !== 'hover') {
+    if (e.type === "mouseenter" && step.event !== "hover") {
       return;
     }
 
@@ -234,7 +254,7 @@ export default class JoyrideStep extends React.Component {
   setPopper = (popper, type) => {
     const { action, setPopper, update } = this.props;
 
-    if (type === 'wrapper') {
+    if (type === "wrapper") {
       this.beaconPopper = popper;
     } else {
       this.tooltipPopper = popper;
@@ -245,7 +265,7 @@ export default class JoyrideStep extends React.Component {
     if (this.beaconPopper && this.tooltipPopper) {
       update({
         action: action === ACTIONS.CLOSE ? ACTIONS.CLOSE : action,
-        ...(this.props.showAll && { lifecycle: LIFECYCLE.READY }),
+        ...(this.props.showAll && { lifecycle: LIFECYCLE.READY })
       });
     }
   };
@@ -257,7 +277,15 @@ export default class JoyrideStep extends React.Component {
   }
 
   render() {
-    const { continuous, debug, helpers, index, lifecycle, size, step } = this.props;
+    const {
+      continuous,
+      debug,
+      helpers,
+      index,
+      lifecycle,
+      size,
+      step
+    } = this.props;
     const target = getElement(step.target);
 
     if (!validateStep(step) || !is.domElement(target)) {

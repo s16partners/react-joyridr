@@ -1,7 +1,7 @@
 // @flow
-import scroll from 'scroll';
-import scrollDoc from 'scroll-doc';
-import scrollParent from 'scrollparent';
+import scroll from "scroll";
+import scrollDoc from "scroll-doc";
+import scrollParent from "scrollparent";
 
 /**
  * Find the bounding client rect
@@ -34,7 +34,7 @@ export function getDocumentHeight(): number {
     body.offsetHeight,
     html.clientHeight,
     html.scrollHeight,
-    html.offsetHeight,
+    html.offsetHeight
   );
 }
 
@@ -47,7 +47,7 @@ export function getDocumentHeight(): number {
  * @returns {HTMLElement|null}
  */
 export function getElement(element: string | HTMLElement): ?HTMLElement {
-  if (typeof element === 'string') {
+  if (typeof element === "string") {
     return element ? document.querySelector(element) : null;
   }
 
@@ -62,7 +62,10 @@ export function getElement(element: string | HTMLElement): ?HTMLElement {
  * @param {HTMLElement} [parent] - The parent element to calculate offsets from
  * @returns {Object}
  */
-export function getRelativeClientRect(element: HTMLElement, parent: HTMLElement): Object {
+export function getRelativeClientRect(
+  element: HTMLElement,
+  parent: HTMLElement
+): Object {
   const elementRect = getClientRect(element);
 
   if (!parent || parent.style.position) {
@@ -76,12 +79,18 @@ export function getRelativeClientRect(element: HTMLElement, parent: HTMLElement)
   return {
     top: offsetTop,
     left: offsetLeft,
-    right: parentRect.right > 0 ? parentRect.right - elementRect.right : elementRect.right,
-    bottom: parentRect.bottom > 0 ? parentRect.bottom - elementRect.bottom : elementRect.bottom,
+    right:
+      parentRect.right > 0
+        ? parentRect.right - elementRect.right
+        : elementRect.right,
+    bottom:
+      parentRect.bottom > 0
+        ? parentRect.bottom - elementRect.bottom
+        : elementRect.bottom,
     x: offsetLeft,
     y: offsetTop,
     width: elementRect.width,
-    height: elementRect.height,
+    height: elementRect.height
   };
 }
 
@@ -108,7 +117,10 @@ export function getStyleComputedProperty(el: HTMLElement): Object {
  *
  * @returns {*}
  */
-export function getScrollParent(element: HTMLElement, skipFix: boolean): HTMLElement {
+export function getScrollParent(
+  element: HTMLElement,
+  skipFix: boolean
+): HTMLElement {
   const parent = scrollParent(element);
 
   if (parent.isSameNode(scrollDoc())) {
@@ -118,7 +130,7 @@ export function getScrollParent(element: HTMLElement, skipFix: boolean): HTMLEle
   const hasScrolling = parent.scrollHeight > parent.offsetHeight;
 
   if (!hasScrolling && !skipFix) {
-    parent.style.overflow = 'initial';
+    parent.style.overflow = "initial";
     return scrollDoc();
   }
 
@@ -133,7 +145,10 @@ export function getScrollParent(element: HTMLElement, skipFix: boolean): HTMLEle
  *
  * @returns {boolean}
  */
-export function hasCustomScrollParent(element: ?HTMLElement, skipFix: boolean): boolean {
+export function hasCustomScrollParent(
+  element: ?HTMLElement,
+  skipFix: boolean
+): boolean {
   if (!element) return false;
 
   const parent = getScrollParent(element, skipFix);
@@ -170,7 +185,7 @@ export function isElementVisible(element: ?HTMLElement): boolean {
     if (parentElement instanceof HTMLElement) {
       const { display, visibility } = getComputedStyle(parentElement);
 
-      if (display === 'none' || visibility === 'hidden') {
+      if (display === "none" || visibility === "hidden") {
         return false;
       }
     }
@@ -192,11 +207,11 @@ export function isFixed(el: ?HTMLElement | Node): boolean {
 
   const { nodeName } = el;
 
-  if (nodeName === 'BODY' || nodeName === 'HTML') {
+  if (nodeName === "BODY" || nodeName === "HTML") {
     return false;
   }
 
-  if (getStyleComputedProperty(el).position === 'fixed') {
+  if (getStyleComputedProperty(el).position === "fixed") {
     return true;
   }
 
@@ -213,12 +228,18 @@ export function isFixed(el: ?HTMLElement | Node): boolean {
  *
  * @returns {HTMLElement|undefined}
  */
-export function getElementPosition(element: HTMLElement, offset: number, skipFix: boolean): number {
+export function getElementPosition(
+  element: HTMLElement,
+  offset: number,
+  skipFix: boolean
+): number {
   const elementRect = getClientRect(element);
   const parent = getScrollParent(element, skipFix);
   const hasScrollParent = hasCustomScrollParent(element, skipFix);
 
-  const top = elementRect.top + (!hasScrollParent && !isFixed(element) ? parent.scrollTop : 0);
+  const top =
+    elementRect.top +
+    (!hasScrollParent && !isFixed(element) ? parent.scrollTop : 0);
 
   return Math.floor(top - offset);
 }
@@ -232,7 +253,11 @@ export function getElementPosition(element: HTMLElement, offset: number, skipFix
  *
  * @returns {number}
  */
-export function getScrollTo(element: HTMLElement, offset: number, skipFix: boolean): number {
+export function getScrollTo(
+  element: HTMLElement,
+  offset: number,
+  skipFix: boolean
+): number {
   if (!element) {
     return 0;
   }
@@ -240,7 +265,10 @@ export function getScrollTo(element: HTMLElement, offset: number, skipFix: boole
   const parent = scrollParent(element);
   let top = element.offsetTop;
 
-  if (hasCustomScrollParent(element, skipFix) && !hasCustomOffsetParent(element)) {
+  if (
+    hasCustomScrollParent(element, skipFix) &&
+    !hasCustomOffsetParent(element)
+  ) {
     top -= parent.offsetTop;
   }
 
@@ -253,14 +281,20 @@ export function getScrollTo(element: HTMLElement, offset: number, skipFix: boole
  * @param {HTMLElement} element
  * @returns {Promise<*>}
  */
-export function scrollTo(value: number, element: HTMLElement = scrollDoc()): Promise<*> {
+export function scrollTo(
+  value: number,
+  element: HTMLElement = scrollDoc()
+): Promise<*> {
   return new Promise((resolve, reject) => {
     const { scrollTop } = element;
 
     const limit = value > scrollTop ? value - scrollTop : scrollTop - value;
 
     scroll.top(element, value, { duration: limit < 100 ? 50 : 300 }, error => {
-      if (error && error.message !== 'Element already at target scroll position') {
+      if (
+        error &&
+        error.message !== "Element already at target scroll position"
+      ) {
         return reject(error);
       }
 

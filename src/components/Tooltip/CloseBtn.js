@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 const JoyrideTooltipCloseBtn = ({ styles, ...props }) => {
   const { color, height, width, ...style } = styles;
@@ -7,8 +7,8 @@ const JoyrideTooltipCloseBtn = ({ styles, ...props }) => {
   return (
     <button style={style} type="button" {...props}>
       <svg
-        width={typeof width === 'number' ? `${width}px` : width}
-        height={typeof height === 'number' ? `${height}px` : height}
+        width={typeof width === "number" ? `${width}px` : width}
+        height={typeof height === "number" ? `${height}px` : height}
         viewBox="0 0 18 18"
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +26,7 @@ const JoyrideTooltipCloseBtn = ({ styles, ...props }) => {
 };
 
 JoyrideTooltipCloseBtn.propTypes = {
-  styles: PropTypes.object.isRequired,
+  styles: PropTypes.object.isRequired
 };
 
 export default JoyrideTooltipCloseBtn;

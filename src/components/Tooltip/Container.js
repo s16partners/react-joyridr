@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import CloseBtn from './CloseBtn';
+import CloseBtn from "./CloseBtn";
 
 export default class JoyrideTooltipContainer extends React.Component {
   static propTypes = {
@@ -14,7 +14,7 @@ export default class JoyrideTooltipContainer extends React.Component {
     size: PropTypes.number.isRequired,
     skipProps: PropTypes.object.isRequired,
     step: PropTypes.object.isRequired,
-    tooltipProps: PropTypes.object.isRequired,
+    tooltipProps: PropTypes.object.isRequired
   };
 
   render() {
@@ -28,7 +28,7 @@ export default class JoyrideTooltipContainer extends React.Component {
       size,
       skipProps,
       step,
-      tooltipProps,
+      tooltipProps
     } = this.props;
     const {
       content,
@@ -38,11 +38,11 @@ export default class JoyrideTooltipContainer extends React.Component {
       showProgress,
       showSkipButton,
       title,
-      styles,
+      styles
     } = step;
     const { back, close, last, next, skip } = step.locale;
     const output = {
-      primary: close,
+      primary: close
     };
 
     if (continuous) {
@@ -73,14 +73,23 @@ export default class JoyrideTooltipContainer extends React.Component {
 
     if (!hideBackButton && index > 0) {
       output.back = (
-        <button style={styles.buttonBack} type="button" data-test-id="button-back" {...backProps}>
+        <button
+          style={styles.buttonBack}
+          type="button"
+          data-test-id="button-back"
+          {...backProps}
+        >
           {back}
         </button>
       );
     }
 
     output.close = !hideCloseButton && (
-      <CloseBtn styles={styles.buttonClose} data-test-id="button-close" {...closeProps} />
+      <CloseBtn
+        styles={styles.buttonClose}
+        data-test-id="button-close"
+        {...closeProps}
+      />
     );
 
     return (

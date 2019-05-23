@@ -1,7 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import { canUseDOM, isReact16 } from '../modules/helpers';
+import React from "react";
+import ReactDOM from "react-dom";
+import PropTypes from "prop-types";
+import { canUseDOM, isReact16 } from "../modules/helpers";
 
 export default class JoyridePortal extends React.Component {
   constructor(props) {
@@ -9,7 +9,7 @@ export default class JoyridePortal extends React.Component {
 
     if (!canUseDOM) return;
 
-    this.node = document.createElement('div');
+    this.node = document.createElement("div");
 
     /* istanbul ignore else */
     if (props.id) {
@@ -21,7 +21,7 @@ export default class JoyridePortal extends React.Component {
 
   static propTypes = {
     children: PropTypes.element,
-    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   };
 
   componentDidMount() {

@@ -1,32 +1,32 @@
-import deepmerge from 'deepmerge';
-import { hexToRGB } from './modules/helpers';
+import deepmerge from "deepmerge";
+import { hexToRGB } from "./modules/helpers";
 
 const defaultOptions = {
-  arrowColor: '#fff',
-  backgroundColor: '#fff',
+  arrowColor: "#fff",
+  backgroundColor: "#fff",
   beaconSize: 36,
-  overlayColor: 'rgba(0, 0, 0, 0.5)',
-  primaryColor: '#f04',
-  spotlightShadow: '0 0 15px rgba(0, 0, 0, 0.5)',
-  textColor: '#333',
-  zIndex: 100,
+  overlayColor: "rgba(0, 0, 0, 0.5)",
+  primaryColor: "#f04",
+  spotlightShadow: "0 0 15px rgba(0, 0, 0, 0.5)",
+  textColor: "#333",
+  zIndex: 100
 };
 
 const buttonBase = {
-  backgroundColor: 'transparent',
+  backgroundColor: "transparent",
   border: 0,
   borderRadius: 0,
-  color: '#555',
-  cursor: 'pointer',
+  color: "#555",
+  cursor: "pointer",
   fontSize: 16,
   lineHeight: 1,
   padding: 8,
-  WebkitAppearance: 'none',
+  WebkitAppearance: "none"
 };
 
 const spotlight = {
   borderRadius: 4,
-  position: 'absolute',
+  position: "absolute"
 };
 
 export default function getStyles(stepStyles = {}) {
@@ -48,137 +48,139 @@ export default function getStyles(stepStyles = {}) {
   const overlay = {
     bottom: 0,
     left: 0,
-    overflow: 'hidden',
-    position: 'absolute',
+    overflow: "hidden",
+    position: "absolute",
     right: 0,
     top: 0,
-    zIndex: options.zIndex,
+    zIndex: options.zIndex
   };
 
   const defaultStyles = {
     beacon: {
       ...buttonBase,
-      display: 'inline-block',
+      display: "inline-block",
       height: options.beaconSize,
-      position: 'relative',
+      position: "relative",
       width: options.beaconSize,
-      zIndex: options.zIndex,
+      zIndex: options.zIndex
     },
     beaconInner: {
-      animation: 'joyride-beacon-inner 1.2s infinite ease-in-out',
+      animation: "joyride-beacon-inner 1.2s infinite ease-in-out",
       backgroundColor: options.primaryColor,
-      borderRadius: '50%',
-      display: 'block',
-      height: '50%',
-      left: '50%',
+      borderRadius: "50%",
+      display: "block",
+      height: "50%",
+      left: "50%",
       opacity: 0.7,
-      position: 'absolute',
-      top: '50%',
-      transform: 'translate(-50%, -50%)',
-      width: '50%',
+      position: "absolute",
+      top: "50%",
+      transform: "translate(-50%, -50%)",
+      width: "50%"
     },
     beaconOuter: {
-      animation: 'joyride-beacon-outer 1.2s infinite ease-in-out',
-      backgroundColor: `rgba(${hexToRGB(options.primaryColor).join(',')}, 0.2)`,
+      animation: "joyride-beacon-outer 1.2s infinite ease-in-out",
+      backgroundColor: `rgba(${hexToRGB(options.primaryColor).join(",")}, 0.2)`,
       border: `2px solid ${options.primaryColor}`,
-      borderRadius: '50%',
-      boxSizing: 'border-box',
-      display: 'block',
-      height: '100%',
+      borderRadius: "50%",
+      boxSizing: "border-box",
+      display: "block",
+      height: "100%",
       left: 0,
       opacity: 0.9,
-      position: 'absolute',
+      position: "absolute",
       top: 0,
-      transformOrigin: 'center',
-      width: '100%',
+      transformOrigin: "center",
+      width: "100%"
     },
     tooltip: {
       backgroundColor: options.backgroundColor,
       borderRadius: 5,
-      boxSizing: 'border-box',
+      boxSizing: "border-box",
       color: options.textColor,
       fontSize: 16,
-      maxWidth: '100%',
+      maxWidth: "100%",
       padding: 15,
-      position: 'relative',
-      width,
+      position: "relative",
+      width
     },
     tooltipContainer: {
       lineHeight: 1.4,
-      textAlign: 'center',
+      textAlign: "center"
     },
     tooltipTitle: {
       fontSize: 18,
-      margin: 0,
+      margin: 0
     },
     tooltipContent: {
-      padding: '20px 10px',
+      padding: "20px 10px"
     },
     tooltipFooter: {
-      alignItems: 'center',
-      display: 'flex',
-      justifyContent: 'flex-end',
-      marginTop: 15,
+      alignItems: "center",
+      display: "flex",
+      justifyContent: "flex-end",
+      marginTop: 15
     },
     tooltipFooterSpacer: {
-      flex: 1,
+      flex: 1
     },
     buttonNext: {
       ...buttonBase,
       backgroundColor: options.primaryColor,
       borderRadius: 4,
-      color: '#fff',
+      color: "#fff"
     },
     buttonBack: {
       ...buttonBase,
       color: options.primaryColor,
-      marginLeft: 'auto',
-      marginRight: 5,
+      marginLeft: "auto",
+      marginRight: 5
     },
     buttonClose: {
       ...buttonBase,
       color: options.textColor,
       height: 14,
       padding: 15,
-      position: 'absolute',
+      position: "absolute",
       right: 0,
       top: 0,
-      width: 14,
+      width: 14
     },
     buttonSkip: {
       ...buttonBase,
       color: options.textColor,
-      fontSize: 14,
+      fontSize: 14
     },
     overlay: {
       ...overlay,
       backgroundColor: options.overlayColor,
-      mixBlendMode: 'hard-light',
+      mixBlendMode: "hard-light"
     },
     overlayLegacy: {
-      ...overlay,
+      ...overlay
     },
     overlayLegacyCenter: {
       ...overlay,
-      backgroundColor: options.overlayColor,
+      backgroundColor: options.overlayColor
     },
     spotlight: {
       ...spotlight,
-      backgroundColor: 'gray',
+      backgroundColor: "gray"
     },
     spotlightLegacy: {
       ...spotlight,
-      boxShadow: `0 0 0 9999px ${options.overlayColor}, ${options.spotlightShadow}`,
+      boxShadow: `0 0 0 9999px ${options.overlayColor}, ${
+        options.spotlightShadow
+      }`
     },
     floaterStyles: {
       arrow: {
-        color: options.arrowColor,
+        color: options.arrowColor
       },
       options: {
-        zIndex: options.zIndex,
-      },
+        zIndex: options.zIndex
+      }
     },
-    options,
+    options
   };
 
   return deepmerge(defaultStyles, stepStyles);

@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Joyride, { STATUS } from '../../src/index';
+import React from "react";
+import PropTypes from "prop-types";
+import Joyride, { STATUS } from "../../src/index";
 
-import tourSteps from './steps';
+import tourSteps from "./steps";
 
 const filteredSteps = tourSteps
   .filter((d, i) => i !== 3)
   .map(d => {
-    if (d.target === '.mission button') {
-      d.target = '.mission h2';
+    if (d.target === ".mission button") {
+      d.target = ".mission h2";
     }
 
     return d;
@@ -20,17 +20,17 @@ export default class Standard extends React.Component {
 
     this.state = {
       run: false,
-      steps: filteredSteps,
+      steps: filteredSteps
     };
   }
 
   static propTypes = {
-    callback: PropTypes.func.isRequired,
+    callback: PropTypes.func.isRequired
   };
 
   handleClickStart = () => {
     this.setState({
-      run: true,
+      run: true
     });
   };
 
@@ -63,9 +63,15 @@ export default class Standard extends React.Component {
             <div className="container">
               <div className="hero__content">
                 <h1>
-                  <span>Create walkthroughs and guided tours for your ReactJS apps.</span>
+                  <span>
+                    Create walkthroughs and guided tours for your ReactJS apps.
+                  </span>
                 </h1>
-                <button className="hero__start" onClick={this.handleClickStart} type="button">
+                <button
+                  className="hero__start"
+                  onClick={this.handleClickStart}
+                  type="button"
+                >
                   Let's Go!
                 </button>
               </div>

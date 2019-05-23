@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Joyride, { ACTIONS, EVENTS, STATUS } from '../../src/index';
+import React from "react";
+import PropTypes from "prop-types";
+import Joyride, { ACTIONS, EVENTS, STATUS } from "../../src/index";
 
-import tourSteps from './steps';
+import tourSteps from "./steps";
 
 export default class Controlled extends React.Component {
   constructor(props) {
@@ -11,18 +11,18 @@ export default class Controlled extends React.Component {
     this.state = {
       run: false,
       steps: tourSteps,
-      stepIndex: 0,
+      stepIndex: 0
     };
   }
 
   static propTypes = {
-    callback: PropTypes.func.isRequired,
+    callback: PropTypes.func.isRequired
   };
 
   handleClickStart = () => {
     this.setState({
       run: true,
-      stepIndex: 0,
+      stepIndex: 0
     });
   };
 
@@ -63,9 +63,15 @@ export default class Controlled extends React.Component {
             <div className="container">
               <div className="hero__content">
                 <h1>
-                  <span>Create walkthroughs and guided tours for your ReactJS apps.</span>
+                  <span>
+                    Create walkthroughs and guided tours for your ReactJS apps.
+                  </span>
                 </h1>
-                <button className="hero__start" onClick={this.handleClickStart} type="button">
+                <button
+                  className="hero__start"
+                  onClick={this.handleClickStart}
+                  type="button"
+                >
                   Let's Go!
                 </button>
               </div>

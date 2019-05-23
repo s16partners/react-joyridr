@@ -1,25 +1,25 @@
-import Enzyme, { shallow, mount, render } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import Enzyme, { shallow, mount, render } from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
 
 Enzyme.configure({ adapter: new Adapter() });
 
-Object.defineProperty(Element.prototype, 'clientHeight', {
+Object.defineProperty(Element.prototype, "clientHeight", {
   writable: true,
-  value: '',
+  value: ""
 });
 
-Object.defineProperty(Element.prototype, 'clientWidth', {
+Object.defineProperty(Element.prototype, "clientWidth", {
   writable: true,
-  value: '',
+  value: ""
 });
 
 global.shallow = shallow;
 global.mount = mount;
 global.render = render;
 
-const react = document.createElement('div');
-react.id = 'react';
-react.style.height = '100vh';
+const react = document.createElement("div");
+react.id = "react";
+react.style.height = "100vh";
 document.body.appendChild(react);
 
 window.requestAnimationFrame = callback => {
@@ -29,5 +29,5 @@ window.requestAnimationFrame = callback => {
 window.matchMedia = () => ({
   matches: false,
   addListener: () => {},
-  removeListener: () => {},
+  removeListener: () => {}
 });

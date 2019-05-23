@@ -1,22 +1,22 @@
-import * as React from 'react';
+import * as React from "react";
 
 export type placement =
-  | 'top'
-  | 'top-start'
-  | 'top-end'
-  | 'bottom'
-  | 'bottom-start'
-  | 'bottom-end'
-  | 'left'
-  | 'left-start'
-  | 'left-end'
-  | 'right'
-  | 'right-start'
-  | 'right-end'
-  | 'auto'
-  | 'center';
+  | "top"
+  | "top-start"
+  | "top-end"
+  | "bottom"
+  | "bottom-start"
+  | "bottom-end"
+  | "left"
+  | "left-start"
+  | "left-end"
+  | "right"
+  | "right-start"
+  | "right-end"
+  | "auto"
+  | "center";
 
-export type placementBeacon = 'top' | 'bottom' | 'left' | 'right';
+export type placementBeacon = "top" | "bottom" | "left" | "right";
 
 export interface StoreState {
   action: string;
@@ -134,35 +134,35 @@ export interface BeaconRenderProps {
 
 export interface TooltipRenderProps extends BeaconRenderProps {
   backProps: {
-    'aria-label': string;
-    'data-action': string;
+    "aria-label": string;
+    "data-action": string;
     onClick: () => void;
     role: string;
     title: string;
   };
   closeProps: {
-    'aria-label': string;
-    'data-action': string;
+    "aria-label": string;
+    "data-action": string;
     onClick: () => void;
     role: string;
     title: string;
   };
   primaryProps: {
-    'aria-label': string;
-    'data-action': string;
+    "aria-label": string;
+    "data-action": string;
     onClick: () => void;
     role: string;
     title: string;
   };
   skipProps: {
-    'aria-label': string;
-    'data-action': string;
+    "aria-label": string;
+    "data-action": string;
     onClick: () => void;
     role: string;
     title: string;
   };
   tooltipProps: {
-    'aria-modal': boolean;
+    "aria-modal": boolean;
     ref: () => void;
     role: string;
   };
@@ -198,51 +198,51 @@ export interface Props {
 export default class ReactJoyride extends React.Component<Props, StoreState> {}
 
 export interface actions {
-  INIT: 'init';
-  START: 'start';
-  STOP: 'stop';
-  RESET: 'reset';
-  RESTART: 'restart';
-  PREV: 'prev';
-  NEXT: 'next';
-  GO: 'go';
-  INDEX: 'index';
-  CLOSE: 'close';
-  SKIP: 'skip';
-  UPDATE: 'update';
+  INIT: "init";
+  START: "start";
+  STOP: "stop";
+  RESET: "reset";
+  RESTART: "restart";
+  PREV: "prev";
+  NEXT: "next";
+  GO: "go";
+  INDEX: "index";
+  CLOSE: "close";
+  SKIP: "skip";
+  UPDATE: "update";
 }
 
 export interface events {
-  TOUR_START: 'tour:start';
-  STEP_BEFORE: 'step:before';
-  BEACON: 'beacon';
-  TOOLTIP: 'tooltip';
-  TOOLTIP_CLOSE: 'close';
-  STEP_AFTER: 'step:after';
-  TOUR_END: 'tour:end';
-  TOUR_STATUS: 'tour:status';
-  TARGET_NOT_FOUND: 'error:target_not_found';
-  ERROR: 'error';
+  TOUR_START: "tour:start";
+  STEP_BEFORE: "step:before";
+  BEACON: "beacon";
+  TOOLTIP: "tooltip";
+  TOOLTIP_CLOSE: "close";
+  STEP_AFTER: "step:after";
+  TOUR_END: "tour:end";
+  TOUR_STATUS: "tour:status";
+  TARGET_NOT_FOUND: "error:target_not_found";
+  ERROR: "error";
 }
 
 export interface lifecycle {
-  INIT: 'init';
-  READY: 'ready';
-  BEACON: 'beacon';
-  TOOLTIP: 'tooltip';
-  COMPLETE: 'complete';
-  ERROR: 'error';
+  INIT: "init";
+  READY: "ready";
+  BEACON: "beacon";
+  TOOLTIP: "tooltip";
+  COMPLETE: "complete";
+  ERROR: "error";
 }
 
 export interface status {
-  IDLE: 'idle';
-  READY: 'ready';
-  WAITING: 'waiting';
-  RUNNING: 'running';
-  PAUSED: 'paused';
-  SKIPPED: 'skipped';
-  FINISHED: 'finished';
-  ERROR: 'error';
+  IDLE: "idle";
+  READY: "ready";
+  WAITING: "waiting";
+  RUNNING: "running";
+  PAUSED: "paused";
+  SKIPPED: "skipped";
+  FINISHED: "finished";
+  ERROR: "error";
 }
 
 export const ACTIONS: actions;

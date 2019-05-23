@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { getText } from '../../modules/helpers';
-import Container from './Container';
+import React from "react";
+import PropTypes from "prop-types";
+import { getText } from "../../modules/helpers";
+import Container from "./Container";
 
 export default class JoyrideTooltip extends React.Component {
   static propTypes = {
@@ -11,7 +11,7 @@ export default class JoyrideTooltip extends React.Component {
     isLastStep: PropTypes.bool.isRequired,
     setTooltipRef: PropTypes.func.isRequired,
     size: PropTypes.number.isRequired,
-    step: PropTypes.object.isRequired,
+    step: PropTypes.object.isRequired
   };
 
   handleClickBack = e => {
@@ -64,38 +64,38 @@ export default class JoyrideTooltip extends React.Component {
 
     return {
       backProps: {
-        'aria-label': back,
-        'data-action': 'back',
+        "aria-label": back,
+        "data-action": "back",
         onClick: this.handleClickBack,
-        role: 'button',
-        title: back,
+        role: "button",
+        title: back
       },
       closeProps: {
-        'aria-label': close,
-        'data-action': 'close',
+        "aria-label": close,
+        "data-action": "close",
         onClick: this.handleClickClose,
-        role: 'button',
-        title: close,
+        role: "button",
+        title: close
       },
       primaryProps: {
-        'aria-label': primaryText,
-        'data-action': 'primary',
+        "aria-label": primaryText,
+        "data-action": "primary",
         onClick: this.handleClickPrimary,
-        role: 'button',
-        title: primaryText,
+        role: "button",
+        title: primaryText
       },
       skipProps: {
-        'aria-label': skip,
-        'data-action': 'skip',
+        "aria-label": skip,
+        "data-action": "skip",
         onClick: this.handleClickSkip,
-        role: 'button',
-        title: skip,
+        role: "button",
+        title: skip
       },
       tooltipProps: {
-        'aria-modal': true,
+        "aria-modal": true,
         ref: setTooltipRef,
-        role: 'alertdialog',
-      },
+        role: "alertdialog"
+      }
     };
   };
 
@@ -111,7 +111,7 @@ export default class JoyrideTooltip extends React.Component {
         index,
         isLastStep,
         size,
-        step: cleanStep,
+        step: cleanStep
       };
 
       const TooltipComponent = tooltipComponent;

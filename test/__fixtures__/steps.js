@@ -1,22 +1,22 @@
-import React from 'react';
+import React from "react";
 
 export default [
   {
-    target: '.projects .list',
-    placement: 'top',
-    content: 'THe first step of many! Keep walking!',
-    textAlign: 'center',
+    target: ".projects .list",
+    placement: "top",
+    content: "THe first step of many! Keep walking!",
+    textAlign: "center"
   },
   {
-    target: '.mission button',
-    placement: 'bottom',
-    content: 'Can be advanced by clicking an element through the overlay hole.',
-    title: 'Our Mission',
-    spotlightClicks: true,
+    target: ".mission button",
+    placement: "bottom",
+    content: "Can be advanced by clicking an element through the overlay hole.",
+    title: "Our Mission",
+    spotlightClicks: true
   },
   {
-    target: '.about h2 span',
-    placement: 'left',
+    target: ".about h2 span",
+    placement: "left",
     content: (
       <div>
         <h3>We are the people</h3>
@@ -36,16 +36,17 @@ export default [
           </g>
         </svg>
       </div>
-    ),
+    )
   },
   {
-    target: '.not-mounted',
-    content: 'This step tests what happens when a target is missing',
-    title: 'Unmounted target',
+    target: ".not-mounted",
+    content: "This step tests what happens when a target is missing",
+    title: "Unmounted target"
   },
   {
-    target: '.demo__footer button',
-    placement: 'top',
-    content: "Text only steps — Because sometimes you don't really need a proper heading",
-  },
+    target: ".demo__footer button",
+    placement: "top",
+    content:
+      "Text only steps — Because sometimes you don't really need a proper heading"
+  }
 ];

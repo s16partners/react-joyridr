@@ -1,19 +1,19 @@
 // @flow
-import is from 'is-lite';
-import { ACTIONS, LIFECYCLE, STATUS } from '../constants';
+import is from "is-lite";
+import { ACTIONS, LIFECYCLE, STATUS } from "../constants";
 
-import { hasValidKeys } from './helpers';
+import { hasValidKeys } from "./helpers";
 
 const defaultState: StoreState = {
-  action: '',
+  action: "",
   controlled: false,
   index: 0,
   lifecycle: LIFECYCLE.INIT,
   size: 0,
-  status: STATUS.IDLE,
+  status: STATUS.IDLE
 };
 
-const validKeys = ['action', 'index', 'lifecycle', 'status'];
+const validKeys = ["action", "index", "lifecycle", "status"];
 
 export default function createStore(props: StoreState): StoreInstance {
   const store: Map<string, any> = new Map();
@@ -30,9 +30,9 @@ export default function createStore(props: StoreState): StoreInstance {
           continuous,
           index: is.number(stepIndex) ? stepIndex : 0,
           lifecycle: LIFECYCLE.INIT,
-          status: steps.length ? STATUS.READY : STATUS.IDLE,
+          status: steps.length ? STATUS.READY : STATUS.IDLE
         },
-        true,
+        true
       );
 
       this.setSteps(steps);
@@ -43,18 +43,18 @@ export default function createStore(props: StoreState): StoreInstance {
 
       const { action, index, lifecycle, size, status } = {
         ...state,
-        ...nextState,
+        ...nextState
       };
 
-      store.set('action', action);
-      store.set('index', index);
-      store.set('lifecycle', lifecycle);
-      store.set('size', size);
-      store.set('status', status);
+      store.set("action", action);
+      store.set("index", index);
+      store.set("lifecycle", lifecycle);
+      store.set("size", size);
+      store.set("status", status);
 
       if (initial) {
-        store.set('controlled', nextState.controlled);
-        store.set('continuous', nextState.continuous);
+        store.set("controlled", nextState.controlled);
+        store.set("continuous", nextState.continuous);
       }
 
       /* istanbul ignore else */
@@ -70,19 +70,20 @@ export default function createStore(props: StoreState): StoreInstance {
       }
 
       return {
-        action: store.get('action') || '',
-        controlled: store.get('controlled') || false,
-        index: parseInt(store.get('index'), 10),
-        lifecycle: store.get('lifecycle') || '',
-        size: store.get('size') || 0,
-        status: store.get('status') || '',
+        action: store.get("action") || "",
+        controlled: store.get("controlled") || false,
+        index: parseInt(store.get("index"), 10),
+        lifecycle: store.get("lifecycle") || "",
+        size: store.get("size") || 0,
+        status: store.get("status") || ""
       };
     }
 
     getNextState(state: Object, force: ?boolean = false): StoreState {
       const { action, controlled, index, size, status } = this.getState();
       const newIndex = is.number(state.index) ? state.index : index;
-      const nextIndex = controlled && !force ? index : Math.min(Math.max(newIndex, 0), size);
+      const nextIndex =
+        controlled && !force ? index : Math.min(Math.max(newIndex, 0), size);
 
       return {
         action: state.action || action,
@@ -90,7 +91,7 @@ export default function createStore(props: StoreState): StoreInstance {
         index: nextIndex,
         lifecycle: state.lifecycle || LIFECYCLE.INIT,
         size: state.size || size,
-        status: nextIndex === size ? STATUS.FINISHED : state.status || status,
+        status: nextIndex === size ? STATUS.FINISHED : state.status || status
       };
     }
 
@@ -102,7 +103,7 @@ export default function createStore(props: StoreState): StoreInstance {
     }
 
     getSteps(): Array<Object> {
-      const steps = data.get('steps');
+      const steps = data.get("steps");
 
       return Array.isArray(steps) ? steps : [];
     }
@@ -115,7 +116,7 @@ export default function createStore(props: StoreState): StoreInstance {
         close: this.close,
         skip: this.skip,
         reset: this.reset,
-        info: this.info,
+        info: this.info
       };
     }
 
@@ -123,10 +124,10 @@ export default function createStore(props: StoreState): StoreInstance {
       const { size, status } = this.getState();
       const state = {
         size: steps.length,
-        status,
+        status
       };
 
-      data.set('steps', steps);
+      data.set("steps", steps);
 
       if (status === STATUS.WAITING && !size && steps.length) {
         state.status = STATUS.RUNNING;
@@ -141,7 +142,9 @@ export default function createStore(props: StoreState): StoreInstance {
 
     update = (state: StoreState) => {
       if (!hasValidKeys(state, validKeys)) {
-        throw new Error(`State is not valid. Valid keys: ${validKeys.join(', ')}`);
+        throw new Error(
+          `State is not valid. Valid keys: ${validKeys.join(", ")}`
+        );
       }
 
       this.setState({
@@ -149,10 +152,10 @@ export default function createStore(props: StoreState): StoreInstance {
           {
             ...this.getState(),
             ...state,
-            action: state.action || ACTIONS.UPDATE,
+            action: state.action || ACTIONS.UPDATE
           },
-          true,
-        ),
+          true
+        )
       });
     };
 
@@ -163,11 +166,11 @@ export default function createStore(props: StoreState): StoreInstance {
         ...this.getNextState(
           {
             action: ACTIONS.START,
-            index: is.number(nextIndex) ? nextIndex : index,
+            index: is.number(nextIndex) ? nextIndex : index
           },
-          true,
+          true
         ),
-        status: size ? STATUS.RUNNING : STATUS.WAITING,
+        status: size ? STATUS.RUNNING : STATUS.WAITING
       });
     };
 
@@ -177,8 +180,11 @@ export default function createStore(props: StoreState): StoreInstance {
       if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) return;
 
       this.setState({
-        ...this.getNextState({ action: ACTIONS.STOP, index: index + (advance ? 1 : 0) }),
-        status: STATUS.PAUSED,
+        ...this.getNextState({
+          action: ACTIONS.STOP,
+          index: index + (advance ? 1 : 0)
+        }),
+        status: STATUS.PAUSED
       });
     };
 
@@ -187,7 +193,11 @@ export default function createStore(props: StoreState): StoreInstance {
       if (status !== STATUS.RUNNING) return;
 
       this.setState({
-        ...this.getNextState({ action: ACTIONS.PREV, index: index - 1, lifecycle }),
+        ...this.getNextState({
+          action: ACTIONS.PREV,
+          index: index - 1,
+          lifecycle
+        })
       });
     };
 
@@ -196,7 +206,9 @@ export default function createStore(props: StoreState): StoreInstance {
 
       if (status !== STATUS.RUNNING) return;
 
-      this.setState(this.getNextState({ action: ACTIONS.NEXT, index: index + 1, lifecycle }));
+      this.setState(
+        this.getNextState({ action: ACTIONS.NEXT, index: index + 1, lifecycle })
+      );
     };
 
     go = nextIndex => {
@@ -207,7 +219,7 @@ export default function createStore(props: StoreState): StoreInstance {
 
       this.setState({
         ...this.getNextState({ action: ACTIONS.GO, index: nextIndex }),
-        status: step ? status : STATUS.FINISHED,
+        status: step ? status : STATUS.FINISHED
       });
     };
 
@@ -216,7 +228,11 @@ export default function createStore(props: StoreState): StoreInstance {
       if (status !== STATUS.RUNNING) return;
 
       this.setState({
-        ...this.getNextState({ action: ACTIONS.CLOSE, index: index + 1 }),
+        ...this.getNextState({
+          action: ACTIONS.CLOSE,
+          index: index,
+          status: STATUS.FINISHED
+        })
       });
     };
 
@@ -227,7 +243,7 @@ export default function createStore(props: StoreState): StoreInstance {
       this.setState({
         action: ACTIONS.SKIP,
         lifecycle: LIFECYCLE.INIT,
-        status: STATUS.SKIPPED,
+        status: STATUS.SKIPPED
       });
     };
 
@@ -237,7 +253,7 @@ export default function createStore(props: StoreState): StoreInstance {
 
       this.setState({
         ...this.getNextState({ action: ACTIONS.RESET, index: 0 }),
-        status: restart ? STATUS.RUNNING : STATUS.READY,
+        status: restart ? STATUS.RUNNING : STATUS.READY
       });
     };
 

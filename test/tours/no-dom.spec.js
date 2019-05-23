@@ -1,34 +1,36 @@
-import React from 'react';
+import React from "react";
 
-import Standard from '../__fixtures__/Standard';
+import Standard from "../__fixtures__/Standard";
 
-jest.mock('exenv', () => ({
-  canUseDOM: false,
+jest.mock("exenv", () => ({
+  canUseDOM: false
 }));
 
 console.warn = jest.fn();
 
 const mockCallback = jest.fn();
 const props = {
-  callback: mockCallback,
+  callback: mockCallback
 };
 
-describe('Joyride > NO-DOM', () => {
+describe("Joyride > NO-DOM", () => {
   let wrapper;
   let joyride;
 
   beforeAll(() => {
-    wrapper = mount(<Standard {...props} />, { attachTo: document.getElementById('react') });
-    joyride = wrapper.find('Joyride').instance();
+    wrapper = mount(<Standard {...props} />, {
+      attachTo: document.getElementById("react")
+    });
+    joyride = wrapper.find("Joyride").instance();
   });
 
-  it('should have initiated the Joyride', () => {
+  it("should have initiated the Joyride", () => {
     expect(joyride.state).toMatchSnapshot();
   });
 
-  it('should not be able to start the tour', () => {
-    wrapper.find('.hero__start').simulate('click');
+  it("should not be able to start the tour", () => {
+    wrapper.find(".hero__start").simulate("click");
 
-    expect(wrapper.find('Joyride > div')).not.toExist();
+    expect(wrapper.find("Joyride > div")).not.toExist();
   });
 });

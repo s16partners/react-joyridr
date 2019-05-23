@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
-import Standard from '../__fixtures__/Standard';
+import Standard from "../__fixtures__/Standard";
 
-import { ACTIONS, EVENTS, LIFECYCLE, STATUS } from '../../src';
+import { ACTIONS, EVENTS, LIFECYCLE, STATUS } from "../../src";
 
-jest.mock('popper.js', () => {
-  const PopperJS = jest.requireActual('popper.js');
+jest.mock("popper.js", () => {
+  const PopperJS = jest.requireActual("popper.js");
 
   return class {
     static placements = PopperJS.placements;
@@ -13,7 +13,7 @@ jest.mock('popper.js', () => {
     constructor() {
       return {
         destroy: () => {},
-        scheduleUpdate: () => {},
+        scheduleUpdate: () => {}
       };
     }
   };
@@ -23,30 +23,32 @@ console.warn = jest.fn();
 
 const mockCallback = jest.fn();
 const props = {
-  callback: mockCallback,
+  callback: mockCallback
 };
 
 function initPopper(wrapper) {
-  const Step = wrapper.find('JoyrideStep').instance();
-  Step.setPopper({ popper: {} }, 'wrapper');
-  Step.setPopper({ popper: {} }, 'tooltip');
+  const Step = wrapper.find("JoyrideStep").instance();
+  Step.setPopper({ popper: {} }, "wrapper");
+  Step.setPopper({ popper: {} }, "tooltip");
 }
 
-describe('Joyride > Skipped', () => {
+describe("Joyride > Skipped", () => {
   let wrapper;
   let joyride;
 
   beforeAll(() => {
-    wrapper = mount(<Standard {...props} />, { attachTo: document.getElementById('react') });
-    joyride = wrapper.find('Joyride').instance();
+    wrapper = mount(<Standard {...props} />, {
+      attachTo: document.getElementById("react")
+    });
+    joyride = wrapper.find("Joyride").instance();
   });
 
-  it('should have initiated the Joyride', () => {
+  it("should have initiated the Joyride", () => {
     expect(joyride.state).toMatchSnapshot();
   });
 
-  it('should be able to start the tour', () => {
-    wrapper.find('.hero__start').simulate('click');
+  it("should be able to start the tour", () => {
+    wrapper.find(".hero__start").simulate("click");
 
     expect(joyride.state).toMatchSnapshot();
     expect(mockCallback).toHaveBeenCalledWith({
@@ -57,11 +59,11 @@ describe('Joyride > Skipped', () => {
       size: 4,
       status: STATUS.RUNNING,
       step: expect.any(Object),
-      type: EVENTS.TOUR_START,
+      type: EVENTS.TOUR_START
     });
   });
 
-  it('should have rendered the STEP 1 Beacon', () => {
+  it("should have rendered the STEP 1 Beacon", () => {
     initPopper(wrapper);
 
     expect(mockCallback).toHaveBeenCalledWith({
@@ -72,7 +74,7 @@ describe('Joyride > Skipped', () => {
       size: 4,
       status: STATUS.RUNNING,
       step: expect.any(Object),
-      type: EVENTS.STEP_BEFORE,
+      type: EVENTS.STEP_BEFORE
     });
 
     expect(mockCallback).toHaveBeenCalledWith({
@@ -83,12 +85,12 @@ describe('Joyride > Skipped', () => {
       size: 4,
       status: STATUS.RUNNING,
       step: expect.any(Object),
-      type: EVENTS.BEACON,
+      type: EVENTS.BEACON
     });
   });
 
-  it('should be able to click STEP 1 Beacon', () => {
-    wrapper.find('JoyrideBeacon').simulate('click');
+  it("should be able to click STEP 1 Beacon", () => {
+    wrapper.find("JoyrideBeacon").simulate("click");
 
     expect(mockCallback).toHaveBeenCalledWith({
       action: ACTIONS.UPDATE,
@@ -98,13 +100,15 @@ describe('Joyride > Skipped', () => {
       size: 4,
       status: STATUS.RUNNING,
       step: expect.any(Object),
-      type: EVENTS.TOOLTIP,
+      type: EVENTS.TOOLTIP
     });
     expect(joyride.state).toMatchSnapshot();
   });
 
-  it('should be able to click STEP 1 Skip button', () => {
-    wrapper.find('JoyrideTooltip [data-test-id="button-skip"]').simulate('click');
+  it("should be able to click STEP 1 Skip button", () => {
+    wrapper
+      .find('JoyrideTooltip [data-test-id="button-skip"]')
+      .simulate("click");
 
     expect(mockCallback).toHaveBeenCalledWith({
       action: ACTIONS.SKIP,
@@ -114,12 +118,12 @@ describe('Joyride > Skipped', () => {
       size: 4,
       status: STATUS.SKIPPED,
       step: expect.any(Object),
-      type: EVENTS.STEP_AFTER,
+      type: EVENTS.STEP_AFTER
     });
     expect(joyride.state).toMatchSnapshot();
   });
 
-  it('should have ended the tour', () => {
+  it("should have ended the tour", () => {
     expect(mockCallback).toHaveBeenCalledWith({
       action: ACTIONS.SKIP,
       controlled: false,
@@ -128,7 +132,7 @@ describe('Joyride > Skipped', () => {
       size: 4,
       status: STATUS.SKIPPED,
       step: expect.any(Object),
-      type: EVENTS.TOUR_END,
+      type: EVENTS.TOUR_END
     });
 
     expect(mockCallback).toHaveBeenCalledWith({
@@ -139,7 +143,7 @@ describe('Joyride > Skipped', () => {
       size: 4,
       status: STATUS.READY,
       step: expect.any(Object),
-      type: EVENTS.TOUR_STATUS,
+      type: EVENTS.TOUR_STATUS
     });
 
     expect(mockCallback).toHaveBeenCalledWith({
@@ -150,13 +154,13 @@ describe('Joyride > Skipped', () => {
       size: 4,
       status: STATUS.PAUSED,
       step: expect.any(Object),
-      type: EVENTS.TOUR_STATUS,
+      type: EVENTS.TOUR_STATUS
     });
   });
 
-  it('should unmount', () => {
+  it("should unmount", () => {
     wrapper.unmount();
 
-    expect(wrapper.find('Joyride')).not.toExist();
+    expect(wrapper.find("Joyride")).not.toExist();
   });
 });
