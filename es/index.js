@@ -2372,6 +2372,10 @@ function (_React$Component) {
           }],
           debug: debug
         });
+        callback(_objectSpread({}, state, {
+          step: step,
+          type: EVENTS.TOOLTIP
+        }));
       }
       /* istanbul ignore else */
 

@@ -183,6 +183,12 @@ export default class JoyrideStep extends React.Component {
         data: [{ key: "props", value: this.props }],
         debug
       });
+
+      callback({
+        ...state,
+        step,
+        type: EVENTS.TOOLTIP
+      });
     }
 
     /* istanbul ignore else */
