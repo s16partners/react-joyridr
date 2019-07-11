@@ -195,7 +195,7 @@ export default class JoyrideOverlay extends React.Component {
       placement,
       styles
     } = this.props;
-    if (disableOverlay || lifecycle !== LIFECYCLE.TOOLTIP) {
+    if (disableOverlay || ![LIFECYCLE.TOOLTIP, LIFECYCLE.INIT].includes(lifecycle)) {
       return null;
     }
 

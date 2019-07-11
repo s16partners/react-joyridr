@@ -139,12 +139,7 @@
       "maxSize": "20 kB"
     }
   ],
-  "husky": {
-    "hooks": {
-      "post-merge": "node tools update",
-      "pre-commit": "node tools upstream && lint-staged && flow"
-    }
-  },
+  "husky": {},
   "lint-staged": {
     "linters": {
       "**/*.+(js|jsx)": [
